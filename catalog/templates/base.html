@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Biblioteca{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="container nav-flex">
+            <a href="{% url 'list_libros' %}" class="logo" style="text-decoration: none; font-weight: bold; color: #2c3e50;">BIBLIOTECA</a>
+            
+            <div class="nav-links">
+                <a href="{% url 'list_libros' %}">Libros</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'mis_prestamos' %}">Mis Préstamos</a>
+                    
+                    {% if user.is_staff %}
+                        <a href="{% url 'gestion_prestamos' %}" style="color: #27ae60; font-weight: bold;">Panel Staff</a>
+                    {% endif %}
+                    
+                    <span class="user-info">| {{ user.username }}</span>
+
+                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-logout" style="color: #e74c3c; cursor: pointer; border: none; background: none; font-weight: bold;">Salir</button> 
+                     </form>
+        
+                  {% else %}
+                    <a href="{% url 'registro' %}">Registrarse</a>
+                    <a href="{% url 'login' %}">Entrar</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    {% if messages %}
+    <div class="container">
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}" style="margin-top: 10px; padding: 10px; border-radius: 5px; background: #d4edda; color: #155724;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <main class="container content">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
+>
+

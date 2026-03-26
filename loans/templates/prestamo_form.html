@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="card" style="max-width: 500px; margin: 40px auto; padding: 30px;">
+        <h2 style="text-align: center; color: #2c3e50; margin-bottom: 25px;">{{ titulo }}</h2>
+        
+        <form method="post" action="">
+            {% csrf_token %}
+            
+            {% if form %}
+                {# FLUJO STAFF: Usa el objeto form de Django #}
+                {% for field in form %}
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <label style="display: block; font-weight: bold; margin-bottom: 8px; color: #555;">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}<div style="color: #e74c3c;">{{ field.errors }}</div>{% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                {# FLUJO USUARIO: Campo manual para fecha_limite #}
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 8px; color: #555;">Fecha Límite</label>
+                    <input type="date" name="fecha_limite" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+            {% endif %}
+            
+            <button type="submit" class="btn-save" style="width: 100%; margin-top: 20px;">Guardar Préstamo</button>
+        </form>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{% url 'gestion_prestamos' %}" style="color: #999; text-decoration: none; font-size: 0.9rem;">← Cancelar</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+

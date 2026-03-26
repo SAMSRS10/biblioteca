@@ -1,0 +1,10 @@
+venv/
+.venv/
+env/
+*.sqlite3
+*.db
+*.sql
+!schema.sql  # (Opcional: permite subir solo el esquema si lo tienes)
+__pycache__/
+*.py[cod]
+.env

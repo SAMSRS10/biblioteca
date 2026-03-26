@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Crear Cuenta{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card" style="max-width: 500px; margin: 40px auto;">
+        <h2 style="text-align: center; margin-bottom: 20px;">Registro de Usuario</h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            {% for field in form %}
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label style="font-weight: bold; display: block; margin-bottom: 5px;">
+                        {{ field.label }}:
+                    </label>
+                    {{ field }}
+                    {% for error in field.errors %}
+                        <p style="color: #dc3545; font-size: 0.8rem; margin: 5px 0;">⚠️ {{ error }}</p>
+                    {% endfor %}
+                    {% if field.help_text and "password" in field.name %}
+                        <small style="display: block; color: #888; font-size: 0.7rem; margin-top: 4px; line-height: 1.2;">
+                            * La contraseña debe tener al menos 8 caracteres y no ser solo números.
+                        </small>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn-save" style="width: 100%; margin-top: 10px;">
+                Registrarme e Ingresar
+            </button>
+        </form>
+
+        <div style="margin-top: 20px; text-align: center; border-top: 1px solid #eee; padding-top: 15px;">
+            <p class="muted" style="font-size: 0.85rem;">
+                ¿Ya tienes cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

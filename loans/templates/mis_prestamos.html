@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Mis Préstamos{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 800px; margin: 40px auto; padding: 25px;">
+    <h2 style="text-align: center; margin-bottom: 25px; color: #333;">Mi Actividad en la Biblioteca</h2>
+
+    {% if prestamos %}
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; min-width: 600px;">
+            <thead>
+                <tr style="border-bottom: 2px solid #eee; text-align: left; background-color: #f9f9f9;">
+                    <th style="padding: 12px;">Libro</th>
+                    <th style="padding: 12px;">Estado del Proceso</th>
+                    <th style="padding: 12px;">Multa</th>
+                    <th style="padding: 12px; text-align: center;">Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in prestamos %}
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 15px;">
+                        <strong style="display: block; color: #2c3e50;">{{ p.libro.titulo }}</strong>
+                        <small class="muted">Límite: {{ p.fecha_limite|date:"d M Y" }}</small>
+                    </td>
+                    <td style="padding: 15px;">
+                        {% if p.estado == 'P' %}
+                            <span style="color: #f39c12; font-weight: bold;">🟡 Pendiente de Aprobación</span>
+                        {% elif p.estado == 'A' %}
+                            <span style="color: #27ae60; font-weight: bold;">🟢 En tu posesión</span>
+                        {% elif p.estado == 'D' %}
+                            <span style="color: #3498db; font-weight: bold;">🔵 En revisión (Staff)</span>
+                        {% else %}
+                            <span class="muted">✅ pretamos finalizado</span>
+                        {% endif %}
+                    </td>
+                    <td style="padding: 15px;">
+                        {% if p.multa_acumulada > 0 %}
+                            <span class="danger" style="background: #fdeaea; padding: 4px 8px; border-radius: 4px;">
+                                ${{ p.multa_acumulada }}
+                            </span>
+                        {% else %}
+                            <span style="color: #ccc;">-</span>
+                        {% endif %}
+                    </td>
+                    <td style="padding: 15px; text-align: center;">
+                        {% if p.estado == 'A' %}
+                            <form action="{% url 'devolver_libro' p.id %}" method="post" style="margin: 0;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-save" 
+                                        style="background: #3498db; font-size: 0.85rem; padding: 6px 12px; border-radius: 4px;"
+                                        onclick="return confirm('¿Confirmas que ya entregaste el libro físico?')">
+                                    Entregar Libro
+                                </button>
+                            </form>
+                        {% elif p.estado == 'P' %}
+                            <small class="muted">Esperando Staff...</small>
+                        {% elif p.estado == 'D' %}
+                            <small style="color: #3498db;">Validando entrega...</small>
+                        {% else %}
+                            <span style="color: #bdc3c7;">Finalizado</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <div style="text-align: center; padding: 40px 20px;">
+            <p class="muted" style="font-size: 1.1rem;">No tienes préstamos ni solicitudes registradas.</p>
+            <a href="{% url 'list_libros' %}" class="btn-save" style="margin-top: 15px; text-decoration: none;">Ver Catálogo</a>
+        </div>
+    {% endif %}
+
+    <div style="margin-top: 30px; text-align: center; border-top: 1px solid #eee; padding-top: 20px;">
+        <a href="{% url 'list_libros' %}" style="font-size: 0.9rem; color: #2980b9; text-decoration: none; font-weight: bold;">
+            ← Volver a la Biblioteca
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+
+

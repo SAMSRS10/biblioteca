@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Catálogo de Libros{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <h1>Libros Disponibles</h1>
+    <form method="GET" class="search-bar" style="display: flex; gap: 10px; margin-bottom: 20px;">
+      <input type="text" name="q" placeholder="Buscar por título o autor..." value="{{ request.GET.q }}">
+      <button type="submit" class="btn-save">Buscar</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr><th>Título</th><th>Autor</th><th>Estado</th></tr>
+      </thead>
+      <tbody>
+        {% for libro in page_obj %}
+          <tr>
+            <td><a href="{% url 'detalle_libro' libro.pk %}">{{ libro.titulo }}</a></td>
+            <td>{{ libro.autor.nombre }}</td>
+            <td>
+              {% if libro.validacion %}
+                <span class="success" style="padding: 2px 5px; border-radius: 4px;">Disponible</span>
+              {% else %}
+                <span class="danger" style="padding: 2px 5px; border-radius: 4px;">Prestado</span>
+              {% endif %}
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="3">No se encontraron resultados para tu busqueda.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="pagination" style="text-align: center; margin-top: 20px;">
+      {% if page_obj.has_previous %}
+        <a href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">« Primera</a>
+      {% endif %}
+      <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Siguiente »</a>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
