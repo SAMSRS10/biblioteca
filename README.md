@@ -43,24 +43,24 @@ python -m venv .venv
 python3 -m venv .venv
 source .venv/bin/activate
 ```
-# 2. Sincronización de Dependencias
+## 2. Sincronización de Dependencias
 Una vez activado el entorno, instalamos Django:
 ```
 pip install --upgrade pip
 pip install django
 ```
-# 3. Construcción de la Base de Datos
+## 3. Construcción de la Base de Datos
 Prepara las tablas donde se guardarán los libros y usuarios:
 ```
 python manage.py makemigrations
 python manage.py migrate
 ```
-# 4. Crear Cuenta de Administrador (Staff)
+## 4. Crear Cuenta de Administrador (Staff)
 Necesaria para gestionar la biblioteca y aprobar préstamos:
 ```
 python manage.py createsuperuser
 ```
-# 5. Inicializar el Servidor
+## 5. Inicializar el Servidor
 ```
 python manage.py runserver
 ```
