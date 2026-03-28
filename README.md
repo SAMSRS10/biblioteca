@@ -1,4 +1,4 @@
-# 📚 Sistema de Gestión Bibliotecaria Transaccional
+# 📚 Sistema de Gestión Bibliotecaria 
 
 Este proyecto es una solución robusta desarrollada en **Django**, diseñada para resolver la logística de una biblioteca moderna. Implementa un control estricto de inventario, un motor de préstamos con cálculo de penalizaciones y una interfaz inteligente que se transforma según el rol del usuario (**Staff o Lector**).
 
