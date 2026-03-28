@@ -79,8 +79,8 @@ Gestión de Préstamos: Aprueba solicitudes y recibe devoluciones. El sistema ca
 Si trabajas en computadoras de laboratorio que borran todo al reiniciar, sigue estas reglas para no perder tu progreso:
 ## 📍 Ubicación Crítica: 
 Guarda siempre tu carpeta de proyecto en una USB o en la partición D: del disco duro. No uses el Escritorio ni Descargas.
-## 📂 El archivo Sagrado:
-El archivo db.sqlite3 es el que contiene todos tus libros y usuarios creados. Asegúrate de que esté siempre dentro de tu carpeta en la unidad persistente (USB/Disco D).
+## 🗄️ Base de Datos Local: 
+Como el archivo db.sqlite3 está excluido del repositorio (por seguridad y limpieza), cada vez que inicies en una PC nueva o formateada, deberás ejecutar los pasos 3 y 4 de la Guía de Instalación para regenerar tu base de datos y tu usuario administrador.
 ## ⚡ Recuperación de Entorno: 
 Si al encender la PC el entorno virtual .venv no funciona o desapareció, solo repite los pasos de creación y activación del entorno virtual. Tu código y tus datos (libros) seguirán ahí.
 
